@@ -14,10 +14,12 @@ This fork has an alternate pinout that can easily be changed in the STM32CubeIDE
 ![0](https://raw.githubusercontent.com/jmcrafty/STM32H7A3-W25Q128-External-Loader/main/.github/images/config.png)
 
 The system clock for the STM32H7A3VIT6 is 280 MHz and the W25Q128 is configured for SDR mode (opposed to DTR)
-|Clock Prescalar | The maximum frequency of OCTOSPI from the datasheet for SDR mode is 80 MHz, so the clock prescalar is set to 4 because 280 / 4 = 70 MHz < 80 MHz |
-|Chip Select High Time | Per the W25Q128 datasheet the longest non-read CS deselect time (tCSH) is 50 ns. 50 ns / 4 prescaler * 280 MHz / 1000 = 3.5 cycles, round up to 4 |
-|Sample Shifting | Sample shifting (SSHT) should be enabled in SDR mode and disabled in DTR mode |
-|Delay Hold Quarter Cycle | Delay hold quarter cycle (DHQC) should be enabled in DTR mode and disabled in SDR mode |
+
+| Setting | Reason |
+| Clock Prescalar | The maximum frequency of OCTOSPI from the datasheet for SDR mode is 80 MHz, so the clock prescalar is set to 4 because 280 / 4 = 70 MHz < 80 MHz |
+| Chip Select High Time | Per the W25Q128 datasheet the longest non-read CS deselect time (tCSH) is 50 ns. 50 ns / 4 prescaler * 280 MHz / 1000 = 3.5 cycles, round up to 4 |
+| Sample Shifting | Sample shifting (SSHT) should be enabled in SDR mode and disabled in DTR mode |
+| Delay Hold Quarter Cycle | Delay hold quarter cycle (DHQC) should be enabled in DTR mode and disabled in SDR mode |
 
 ## MPU Configuration:
 ### 
