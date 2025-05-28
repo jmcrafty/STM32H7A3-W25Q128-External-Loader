@@ -508,6 +508,51 @@ HAL_StatusTypeDef W25Q128_OSPI_Read(OSPI_HandleTypeDef* hospi,uint8_t* pData, ui
   return HAL_OK;
 }
 
+/* Read JEDEC ID Function */
+HAL_StatusTypeDef W25Q128_OSPI_Read_JEDEC(OSPI_HandleTypeDef* hospi, uint8_t* pData, uint32_t ReadAddr, uint32_t Size)
+{
+  OSPI_RegularCmdTypeDef sCommand={0};
+  /* Initialize the read command */
+  /* Common Commands*/
+  sCommand.OperationType      		= HAL_OSPI_OPTYPE_COMMON_CFG; 				/* Common configuration (indirect or auto-polling mode) */
+  sCommand.FlashId            		= HAL_OSPI_FLASH_ID_1; 						/* Set The OCTO SPI Flash ID */
+  sCommand.InstructionDtrMode 		= HAL_OSPI_INSTRUCTION_DTR_DISABLE; 		/* Disable Instruction DDR/DTR Mode */
+  sCommand.AddressDtrMode     		= HAL_OSPI_ADDRESS_DTR_DISABLE; 			/* Disable Address DDR/DTR Mode */
+  sCommand.DataDtrMode				= HAL_OSPI_DATA_DTR_DISABLE; 				/* Disable Data DDR/DTR Mode */
+  sCommand.DQSMode            		= HAL_OSPI_DQS_DISABLE; 					/* Disable Data Strobe */
+  sCommand.SIOOMode          		= HAL_OSPI_SIOO_INST_EVERY_CMD; 			/* SIOO Mode: Send instruction on every transaction */
+  sCommand.AlternateBytesMode 		= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Disable Alternate Bytes Mode */
+  sCommand.AlternateBytes			= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Alternate Bytes = 0 */
+  sCommand.AlternateBytesSize		= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Alternate Bytes Size = 0 */
+  sCommand.AlternateBytesDtrMode	= HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE; 	/* Disable Alternate Bytes DDR/DTR Mode */
+  sCommand.InstructionMode   		= HAL_OSPI_INSTRUCTION_1_LINE;				/* Instruction on a single line */
+  sCommand.InstructionSize    		= HAL_OSPI_INSTRUCTION_8_BITS;				/* 8-bit Instruction */
+  sCommand.AddressSize 				= HAL_OSPI_ADDRESS_24_BITS;					/* 24-bit Address */
+  /* Instruction */
+  sCommand.Instruction 				= W25Q_FULLID_QUAD_IO_CMD;					/* What We Do? */
+  /* Address */
+  sCommand.AddressMode       		= HAL_OSPI_ADDRESS_4_LINES;					/* Define Address Lines: Address On Four Line */
+  sCommand.Address					= ReadAddr;									/* Byte Address */
+  /* Data */
+  sCommand.DataMode          		= HAL_OSPI_DATA_4_LINES;					/* Define Data Lines: Data On Four Lines */
+  sCommand.DummyCycles       		= W25Q_DUMMY_CYCLES_READ_QUAD;				/* Bytes Send With No Data */
+  sCommand.NbData            		= Size;										/* Bytes Send With Data */
+
+  /* Configure the command */
+  if (HAL_OSPI_Command(hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+
+  /* Reception of the data */
+  if (HAL_OSPI_Receive(hospi, pData, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  {
+    return HAL_ERROR;
+  }
+
+  return HAL_OK;
+}
+
 /* Memory Map Enable Function */
 HAL_StatusTypeDef W25Q128_OSPI_EnableMemoryMappedMode(OSPI_HandleTypeDef* hospi)
 {

@@ -71,7 +71,7 @@
 #define W25Q_PAGE_PROGRAM_QUAD_INP_CMD 				0x32U	/* program page (256bytes) by Quad SPI lines */
 #define W25Q_FAST_READ_QUAD_OUT_CMD 				0x6BU	/* fast read in quad-SPI OUTPUT (8.2.16) */
 #define W25Q_FULLID_QUAD_IO_CMD 					0x94U	/* read Manufacturer ID & Device ID by quad I/O */
-#define W25Q_FAST_READ_QUAD_IO_CMD 					0xEBU	/* fast read in quad-SPI I/O (address transmits by quad lines) */
+#define W25Q_FAST_READ_QUAD_IO_CMD 					0xEB	/* fast read in quad-SPI I/O (address transmits by quad lines) */
 #define W25Q_SET_BURST_WRAP_CMD 					0x77U	/* use with quad-I/O (8.2.22) */
 
 /**
@@ -96,6 +96,7 @@ HAL_StatusTypeDef W25Q128_OSPI_Erase_Block_32KB(OSPI_HandleTypeDef* hospi, uint3
 HAL_StatusTypeDef W25Q128_OSPI_Erase_Block_64KB(OSPI_HandleTypeDef* hospi, uint32_t BlockAddress);
 HAL_StatusTypeDef W25Q128_OSPI_Write(OSPI_HandleTypeDef* hospi, uint8_t* pData, uint32_t WriteAddr, uint32_t Size);
 HAL_StatusTypeDef W25Q128_OSPI_Read(OSPI_HandleTypeDef* hospi, uint8_t* pData, uint32_t ReadAddr, uint32_t Size);
+HAL_StatusTypeDef W25Q128_OSPI_Read_JEDEC(OSPI_HandleTypeDef* hospi, uint8_t* pData, uint32_t ReadAddr, uint32_t Size);
 HAL_StatusTypeDef W25Q128_OSPI_EnableMemoryMappedMode(OSPI_HandleTypeDef* hospi);
 HAL_StatusTypeDef W25Q128_IsBusy(OSPI_HandleTypeDef* hospi);
 HAL_StatusTypeDef W25Q128_Read_Status_Registers(OSPI_HandleTypeDef* hospi, uint8_t* register_data, uint8_t register_num);
