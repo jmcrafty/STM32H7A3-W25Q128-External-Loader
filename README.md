@@ -1,6 +1,8 @@
 # STM32H7A3-W25Q128-External-Loader
 ## W25Q128 External Loader for STM32H7A3VIT6
 
+This is a modified fork compatible with the STM32H7A3VIT6 chip variant. The difference between this repository and the original branch is that there are changes to MPU configuration settings to allow the loader to access memory regions at 0x90000000 - 0x9FFFFFFF after the chip is memory mapped. This fork has an alternate pinout that can easily be changed in the STM32CubeIDE Configuration GUI.
+
 ## Pin Out:
 
 ![Pinout-2](https://raw.githubusercontent.com/jmcrafty/STM32H7A3-W25Q128-External-Loader/main/.github/images/pinout.png)
