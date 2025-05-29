@@ -17,6 +17,7 @@ The system clock for the STM32H7A3VIT6 is 280 MHz and the W25Q128 is configured 
 
 | Setting | Reason |
 | --- | --- |
+| Device Size | OCTOSPI App Note: 21 = 2 MB, 22 = 4 MB, 23 = 8 MB, 24 = 16 MB |
 | Clock Prescalar | The maximum frequency of OCTOSPI from the datasheet for SDR mode is 80 MHz, so the clock prescalar is set to 4 because 280 / 4 = 70 MHz < 80 MHz |
 | Chip Select High Time | Per the W25Q128 datasheet the longest non-read CS deselect time (tCSH) is 50 ns. 50 ns / 4 prescaler * 280 MHz / 1000 = 3.5 cycles, round up to 4 |
 | Sample Shifting | Sample shifting (SSHT) should be enabled in SDR mode and disabled in DTR mode |
